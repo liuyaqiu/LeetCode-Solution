@@ -5,11 +5,12 @@
 using namespace std;
 
 int strStr(string haystak, string needle) {
-    if(haystak.empty())
+    if(haystak.empty()) {
         if(needle.empty())
             return 0;
         else
             return -1;
+    }
     int i = 0;
     int pos = haystak.length() - needle.length();
     while(i < pos) {

@@ -11,28 +11,23 @@ struct TreeNode {
     TreeNode(int x): val(x), left(NULL), right(NULL) {}
 };
 
-void inOrder(TreeNode* root, TreeNode* &pre, bool& judge) {
+bool inOrder(TreeNode* root, TreeNode* &pre) {
     if(root == NULL)
-        return;
-    TreeNode* left = root->left;
-    TreeNode* right = root->right;
-    if(left != NULL)
-        inOrder(left, pre, judge);
+        return true;
+    if(!inOrder(root->left, pre))
+        return false;
     if(pre != NULL) {
-        if(root->val <= pre->val) {
-            judge = false;
-            return;
-        }
+        if(root->val <= pre->val)
+            return false;
     }
     pre = root;
-    if(right != NULL)
-        inOrder(right, pre, judge);
+    if(!inOrder(root->right, pre))
+        return false;
+    return true;
 }
 
 bool isValidBST(TreeNode* root) {
     TreeNode* pre = NULL;
-    bool judge = true;
-    inOrder(root, pre, judge);
-    return judge;
+    return inOrder(root, pre);
 }
 
